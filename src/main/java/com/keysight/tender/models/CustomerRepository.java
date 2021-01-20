@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     @Query
-    List<Customer> findTopByINN(String INN);
+    List<Customer> findTopByInn(String inn);
     @Query
-    List <Customer> findTopByName(String Name);
+    List <Customer> findTopByName(String name);
     @Query
-    List <Customer> findTopByINNAndName(String INN, String Name);
+    List <Customer> findTopByInnAndName(String inn, String name);
 }

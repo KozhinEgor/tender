@@ -15,7 +15,7 @@ public class Customer {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
         private Long id;
     @Column(nullable = true)
-        private String INN;
+        private String inn;
     @Column(nullable = false)
         private String name;
 
@@ -27,8 +27,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String INN, String name) {
-        this.INN = INN;
+    public Customer(String inn, String name) {
+        this.inn = inn;
         this.name = name;
     }
 
@@ -40,12 +40,12 @@ public class Customer {
         this.id = id;
     }
 
-    public String getINN() {
-        return INN;
+    public String getinn() {
+        return inn;
     }
 
-    public void setINN(String INN) {
-        this.INN = INN;
+    public void setinn(String inn) {
+        this.inn = inn;
     }
 
     public String getname() {

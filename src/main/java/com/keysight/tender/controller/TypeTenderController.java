@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,8 +41,7 @@ public class TypeTenderController {
     private Tender Tender;
     @Autowired
     private TenderRepository tenderRepository;
-    private DateTimeFormatter format_date_start= DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    private DateTimeFormatter format_date_finish= DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+    private DateTimeFormatter format_date= DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 
 
 
@@ -60,19 +60,19 @@ public class TypeTenderController {
             String NumberTender = new DataFormatter().formatCellValue(row.getCell(5));
             Tender= new Tender();
             Tender.setCustomer(customer);
-            Tender.setNameTender(row.getCell(2).getStringCellValue());
-            Tender.setNumberTender(NumberTender);
-            Tender.setBicoTender(row.getCell(2).getHyperlink().getAddress());
-            Tender.setGosZakupki(row.getCell(3).getHyperlink().getAddress());
+            Tender.setnameTender(row.getCell(2).getStringCellValue());
+            Tender.setnumberTender(NumberTender);
+            Tender.setbicoTender(row.getCell(2).getHyperlink().getAddress());
+            Tender.setgosZakupki(row.getCell(3).getHyperlink().getAddress());
             Tender.setTypetender(typetender);
             Tender.setPrice(new BigDecimal(row.getCell(6).getNumericCellValue()).setScale(2, BigDecimal.ROUND_CEILING));
             Tender.setCurrency(row.getCell(7).getStringCellValue());
             Tender.setRate(row.getCell(8).getNumericCellValue());
-            Tender.setDateStart(LocalDate.parse(row.getCell(10).getStringCellValue(),format_date_start));
-            Tender.setDateFinish(LocalDateTime.parse(row.getCell(11).getStringCellValue(),format_date_finish));
+            Tender.setdateStart(LocalDateTime.parse(row.getCell(10).getStringCellValue()+" 03:00:00",format_date));
+            Tender.setdateFinish(LocalDateTime.parse(row.getCell(11).getStringCellValue(),format_date));
             Tender.setWinner(winner);
-            Tender.setWinSum(new BigDecimal(0));
-            Tender.setFullSum(Tender.getPrice());
+            Tender.setwinSum(new BigDecimal(0));
+            Tender.setfullSum(Tender.getPrice());
             Tender.setSum(Tender.getPrice());
             tenderRepository.save(Tender);
 
@@ -105,5 +105,16 @@ public class TypeTenderController {
 
           return tenderRepository.findAll();
         }
+    @GetMapping(path = "/getAllfinish")
+    public @ResponseBody Iterable<Timestamp> getAllfinish(){
+
+        return tenderRepository.findDateFinish();
+    }
+    //-i -H "Accept: application/json"-H "Content-Type: application/json"-X POST --data "{\"dateStart\":\"2020-10-01T00:00:00\",\"dateFinish\":\"2020-10-10T12:00:00\"}" http://localhost:8081/demo/betweenDate
+    @CrossOrigin
+    @RequestMapping( path = "/betweenDate")
+    @ResponseBody public  Iterable<Tender> getAllTenderBetween (@RequestBody ReceivedJSON json){
+        return tenderRepository.findAll();
+    }
 
 }

@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface WinnerRepository extends CrudRepository<Winner, Integer> {
     @Query
-        List<Winner> findTopByINN(String INN);
+        List<Winner> findTopByInn(String inn);
     @Query
         List<Winner> findTopByName(String name);
     @Query
-        List<Winner> findTopByOGRN(String OGRN);
+        List<Winner> findTopByOgrn(String ogrn);
     @Query
-        List<Winner> findTopByINNAndName(String INN,String Name);
+        List<Winner> findTopByInnAndName(String Inn,String Name);
     @Query
         List<Winner> findByid(Long id);
 }

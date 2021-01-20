@@ -18,9 +18,9 @@ public class Winner {
     @Column(unique = true,nullable = false)
         private String name;
     @Column(unique=true, length = 11,nullable = false)
-        private String INN;
+        private String inn;
     @Column(unique=true, length = 11,nullable = false)
-        private String OGRN;
+        private String ogrn;
 
     @JsonIgnore
     @XmlTransient
@@ -30,10 +30,10 @@ public class Winner {
     public Winner() {
     }
 
-    public Winner(String name, String INN, String OGRN) {
+    public Winner(String name, String inn, String ogrn) {
         this.name = name;
-        this.INN = INN;
-        this.OGRN = OGRN;
+        this.inn = inn;
+        this.ogrn = ogrn;
     }
 
     public Long getId() {
@@ -52,19 +52,19 @@ public class Winner {
         name = Name;
     }
 
-    public String getINN() {
-        return INN;
+    public String getinn() {
+        return inn;
     }
 
-    public void setINN(String INN) {
-        this.INN = INN;
+    public void setinn(String inn) {
+        this.inn = inn;
     }
 
-    public String getOGRN() {
-        return OGRN;
+    public String getogrn() {
+        return ogrn;
     }
 
-    public void setOGRN(String OGRN) {
-        this.OGRN = OGRN;
+    public void setogrn(String ogrn) {
+        this.ogrn = ogrn;
     }
 }

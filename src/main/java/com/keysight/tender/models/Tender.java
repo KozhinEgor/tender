@@ -24,19 +24,19 @@ public class Tender {
         private  Customer Customer;
     @Lob
     @Column(nullable = false, length = 512)
-        private String NameTender;
+        private String nameTender;
     @Column(nullable = false)
-        private String NumberTender;
+        private String numberTender;
     @Column(nullable = false)
-        private String BicoTender;
+        private String bicoTender;
     @Lob
     @Column(nullable = false)
-        private String GosZakupki;
+        private String gosZakupki;
 
     @JsonIgnore
     @XmlTransient
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "TypeId", nullable = false)
+    @JoinColumn(name = "typeId", nullable = false)
         private Typetender Typetender;
     @Column(nullable = false)
         private BigDecimal price;
@@ -46,14 +46,18 @@ public class Tender {
         private double rate;
     @Column(nullable = false)
         private BigDecimal sum;
+
+
     @Column(nullable = false)
-        private java.time.LocalDate DateStart;
+        private LocalDateTime dateStart;
+
+
     @Column(nullable = false)
-        private  java.time.LocalDateTime DateFinish;
+        private  LocalDateTime dateFinish;
     @Column(nullable = false)
-        private BigDecimal FullSum;
+        private BigDecimal fullSum;
     @Column(nullable = false)
-        private BigDecimal WinSum;
+        private BigDecimal winSum;
 
     @JsonIgnore
     @XmlTransient
@@ -68,22 +72,22 @@ public class Tender {
                   String nameTender, String numberTender, String bicoTender,
                   String gosZakupki, com.keysight.tender.models.Typetender typetender,
                   BigDecimal price, String currency, double rate,
-                  LocalDate dateStart, LocalDateTime dateFinish,
+                  LocalDateTime dateStart, LocalDateTime dateFinish,
                   com.keysight.tender.models.Winner winner) {
         Customer = customer;
-        NameTender = nameTender;
-        NumberTender = numberTender;
-        BicoTender = bicoTender;
-        GosZakupki = gosZakupki;
+        this.nameTender = nameTender;
+        this.numberTender = numberTender;
+        this.bicoTender = bicoTender;
+        this.gosZakupki = gosZakupki;
         Typetender = typetender;
         this.price = price;
         this.currency = currency;
         this.rate = rate;
         this.sum = new BigDecimal(rate).multiply(price);
-        DateStart = dateStart;
-        DateFinish = dateFinish;
-        FullSum = sum;
-        WinSum = new BigDecimal(0);
+        this.dateStart = dateStart;
+        this.dateFinish = dateFinish;
+        fullSum = sum;
+        winSum = new BigDecimal(0);
         Winner = winner;
     }
 
@@ -95,48 +99,48 @@ public class Tender {
         this.id = id;
     }
 
-    public com.keysight.tender.models.Customer getCustomer() {
-        return Customer;
+    public String getCustomer() {
+        return Customer.getname();
     }
 
     public void setCustomer(com.keysight.tender.models.Customer customer) {
         Customer = customer;
     }
 
-    public String getNameTender() {
-        return NameTender;
+    public String getnameTender() {
+        return nameTender;
     }
 
-    public void setNameTender(String nameTender) {
-        NameTender = nameTender;
+    public void setnameTender(String nameTender) {
+        this.nameTender = nameTender;
     }
 
-    public String getNumberTender() {
-        return NumberTender;
+    public String getnumberTender() {
+        return numberTender;
     }
 
-    public void setNumberTender(String numberTender) {
-        NumberTender = numberTender;
+    public void setnumberTender(String numberTender) {
+        this.numberTender = numberTender;
     }
 
-    public String getBicoTender() {
-        return BicoTender;
+    public String getbicoTender() {
+        return bicoTender;
     }
 
-    public void setBicoTender(String bicoTender) {
-        BicoTender = bicoTender;
+    public void setbicoTender(String bicoTender) {
+        this.bicoTender = bicoTender;
     }
 
-    public String getGosZakupki() {
-        return GosZakupki;
+    public String getgosZakupki() {
+        return gosZakupki;
     }
 
-    public void setGosZakupki(String gosZakupki) {
-        GosZakupki = gosZakupki;
+    public void setgosZakupki(String gosZakupki) {
+        this.gosZakupki = gosZakupki;
     }
 
-    public com.keysight.tender.models.Typetender getTypetender() {
-        return Typetender;
+    public String getTypetender() {
+        return Typetender.getType();
     }
 
     public void setTypetender(com.keysight.tender.models.Typetender typetender) {
@@ -175,40 +179,40 @@ public class Tender {
         this.sum = sum;
     }
 
-    public LocalDate getDateStart() {
-        return DateStart;
+    public LocalDateTime getdateStart() {
+        return dateStart;
     }
 
-    public void setDateStart(LocalDate dateStart) {
-        DateStart = dateStart;
+    public void setdateStart(LocalDateTime dateStart) {
+        this.dateStart = dateStart;
     }
 
-    public LocalDateTime getDateFinish() {
-        return DateFinish;
+    public LocalDateTime getdateFinish() {
+        return dateFinish;
     }
 
-    public void setDateFinish(LocalDateTime dateFinish) {
-        DateFinish = dateFinish;
+    public void setdateFinish(LocalDateTime dateFinish) {
+        this.dateFinish = dateFinish;
     }
 
-    public BigDecimal getFullSum() {
-        return FullSum;
+    public BigDecimal getfullSum() {
+        return fullSum;
     }
 
-    public void setFullSum(BigDecimal fullSum) {
-        FullSum = fullSum;
+    public void setfullSum(BigDecimal fullSum) {
+        this.fullSum = fullSum;
     }
 
-    public BigDecimal getWinSum() {
-        return WinSum;
+    public BigDecimal getwinSum() {
+        return winSum;
     }
 
-    public void setWinSum(BigDecimal winSum) {
-        WinSum = winSum;
+    public void setwinSum(BigDecimal winSum) {
+        this.winSum = winSum;
     }
 
-    public com.keysight.tender.models.Winner getWinner() {
-        return Winner;
+    public String getWinner() {
+        return Winner.getName();
     }
 
     public void setWinner(com.keysight.tender.models.Winner winner) {

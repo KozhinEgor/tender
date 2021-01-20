@@ -20,16 +20,16 @@ public class SearchAtribut  {
     @Autowired
     private WinnerRepository winnerRepository;
 
-    public Customer findCustomer ( String INN, String Name) {
-        if(INN.length() == 0){
-            INN = "0";
+    public Customer findCustomer ( String inn, String name) {
+        if(inn.length() == 0){
+            inn = "0";
         }
-        List<Customer> FindCustomer = customerRepository.findTopByINNAndName(INN, Name);
+        List<Customer> FindCustomer = customerRepository.findTopByInnAndName(inn, name);
 
         if(FindCustomer.isEmpty()){
             //добавление новой записи
 
-            customer = customerRepository.save(new Customer(INN,Name));
+            customer = customerRepository.save(new Customer(inn,name));
         }
         else {
             customer = FindCustomer.get(0);
