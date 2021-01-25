@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -32,7 +32,8 @@ import java.util.List;
 @Controller
 @RequestMapping(path = "/demo")
 public class TypeTenderController {
-
+    @Autowired
+    private TypetenderRepository typetenderRepository;
     @Autowired
     private SearchAtribut searchAtribut;
     private Customer customer;
@@ -41,7 +42,11 @@ public class TypeTenderController {
     private Tender Tender;
     @Autowired
     private TenderRepository tenderRepository;
-    private DateTimeFormatter format_date= DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private WinnerRepository winnerRepository;
+    private DateTimeFormatter format_date= DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss z");
 
 
 
@@ -59,18 +64,18 @@ public class TypeTenderController {
             winner = searchAtribut.findNoWinner();
             String NumberTender = new DataFormatter().formatCellValue(row.getCell(5));
             Tender= new Tender();
-            Tender.setCustomer(customer);
+            Tender.setcustomer(customer);
             Tender.setnameTender(row.getCell(2).getStringCellValue());
             Tender.setnumberTender(NumberTender);
             Tender.setbicoTender(row.getCell(2).getHyperlink().getAddress());
             Tender.setgosZakupki(row.getCell(3).getHyperlink().getAddress());
-            Tender.setTypetender(typetender);
+            Tender.settypetender(typetender);
             Tender.setPrice(new BigDecimal(row.getCell(6).getNumericCellValue()).setScale(2, BigDecimal.ROUND_CEILING));
             Tender.setCurrency(row.getCell(7).getStringCellValue());
             Tender.setRate(row.getCell(8).getNumericCellValue());
-            Tender.setdateStart(LocalDateTime.parse(row.getCell(10).getStringCellValue()+" 03:00:00",format_date));
-            Tender.setdateFinish(LocalDateTime.parse(row.getCell(11).getStringCellValue(),format_date));
-            Tender.setWinner(winner);
+            Tender.setdateStart(ZonedDateTime.parse(row.getCell(10).getStringCellValue()+" 00:00:00 Z",format_date));
+            Tender.setdateFinish(ZonedDateTime.parse(row.getCell(11).getStringCellValue()+ " Z",format_date));
+            Tender.setwinner(winner);
             Tender.setwinSum(new BigDecimal(0));
             Tender.setfullSum(Tender.getPrice());
             Tender.setSum(Tender.getPrice());
@@ -100,21 +105,30 @@ public class TypeTenderController {
     public @ResponseBody List<Typetender> FindByType(){
         return tenderRepository.findByType("Чет");
     }*/
+
+    @GetMapping(path = "/getAllTypes")
+    public @ResponseBody Iterable<Typetender> getAllType(){
+        return typetenderRepository.findAll();
+    }
+    @GetMapping(path = "/getAllCustom")
+    public @ResponseBody Iterable<Customer> getAllCustom(){
+        return customerRepository.findAll();
+    }
+    @GetMapping(path = "/getAllWinner")
+    public @ResponseBody Iterable<Winner> getAllWinner(){
+        return winnerRepository.findAll();
+    }
     @GetMapping(path = "/getAll")
-        public @ResponseBody Iterable<Tender> getAllType(){
-
-          return tenderRepository.findAll();
-        }
-    @GetMapping(path = "/getAllfinish")
-    public @ResponseBody Iterable<Timestamp> getAllfinish(){
-
-        return tenderRepository.findDateFinish();
+    public @ResponseBody Iterable<Tender> getAll(){
+        return tenderRepository.findAll();
     }
     //-i -H "Accept: application/json"-H "Content-Type: application/json"-X POST --data "{\"dateStart\":\"2020-10-01T00:00:00\",\"dateFinish\":\"2020-10-10T12:00:00\"}" http://localhost:8081/demo/betweenDate
-    @CrossOrigin
+
     @RequestMapping( path = "/betweenDate")
     @ResponseBody public  Iterable<Tender> getAllTenderBetween (@RequestBody ReceivedJSON json){
-        return tenderRepository.findAll();
+        json.getRequest();
+        System.out.println(json.getDateFinish());
+        return tenderRepository.SelectMyQuery(json.getDateFinish(), json.getDateStart(),json.getType(),json.getCustom(),json.getWinner(),json.getMinSum(),json.getMaxSum());
     }
 
 }

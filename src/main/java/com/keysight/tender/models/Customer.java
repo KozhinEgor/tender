@@ -21,7 +21,7 @@ public class Customer {
 
     @JsonIgnore
     @XmlTransient
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "Customer")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
         private Set<Tender> Tender;
 
     public Customer() {

@@ -8,7 +8,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Entity
@@ -17,11 +17,10 @@ public class Tender {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
         Long id;
-    @JsonIgnore
-    @XmlTransient
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "CustomerId",nullable = false)
-        private  Customer Customer;
+    @JoinColumn(name = "customer",nullable = false)
+        private  Customer customer;
     @Lob
     @Column(nullable = false, length = 512)
         private String nameTender;
@@ -33,11 +32,10 @@ public class Tender {
     @Column(nullable = false)
         private String gosZakupki;
 
-    @JsonIgnore
-    @XmlTransient
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "typeId", nullable = false)
-        private Typetender Typetender;
+    @JoinColumn(name= "typetender", nullable = false)
+        private Typetender typetender;
     @Column(nullable = false)
         private BigDecimal price;
     @Column(nullable = false)
@@ -49,21 +47,20 @@ public class Tender {
 
 
     @Column(nullable = false)
-        private LocalDateTime dateStart;
+        private ZonedDateTime dateStart;
 
 
     @Column(nullable = false)
-        private  LocalDateTime dateFinish;
+        private  ZonedDateTime dateFinish;
     @Column(nullable = false)
         private BigDecimal fullSum;
     @Column(nullable = false)
         private BigDecimal winSum;
 
-    @JsonIgnore
-    @XmlTransient
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "winnerId",nullable = false)
-        private Winner Winner;
+    @JoinColumn(name = "winner",nullable = false)
+        private Winner winner;
 
     public Tender() {
     }
@@ -72,14 +69,14 @@ public class Tender {
                   String nameTender, String numberTender, String bicoTender,
                   String gosZakupki, com.keysight.tender.models.Typetender typetender,
                   BigDecimal price, String currency, double rate,
-                  LocalDateTime dateStart, LocalDateTime dateFinish,
+                  ZonedDateTime dateStart, ZonedDateTime dateFinish,
                   com.keysight.tender.models.Winner winner) {
-        Customer = customer;
+        this.customer = customer;
         this.nameTender = nameTender;
         this.numberTender = numberTender;
         this.bicoTender = bicoTender;
         this.gosZakupki = gosZakupki;
-        Typetender = typetender;
+        this.typetender = typetender;
         this.price = price;
         this.currency = currency;
         this.rate = rate;
@@ -88,7 +85,7 @@ public class Tender {
         this.dateFinish = dateFinish;
         fullSum = sum;
         winSum = new BigDecimal(0);
-        Winner = winner;
+        this.winner = winner;
     }
 
     public Long getId() {
@@ -100,11 +97,11 @@ public class Tender {
     }
 
     public String getCustomer() {
-        return Customer.getname();
+        return customer.getname();
     }
 
-    public void setCustomer(com.keysight.tender.models.Customer customer) {
-        Customer = customer;
+    public void setcustomer(com.keysight.tender.models.Customer customer) {
+        this.customer = customer;
     }
 
     public String getnameTender() {
@@ -139,12 +136,12 @@ public class Tender {
         this.gosZakupki = gosZakupki;
     }
 
-    public String getTypetender() {
-        return Typetender.getType();
+    public String gettypetender() {
+        return this.typetender.getType();
     }
 
-    public void setTypetender(com.keysight.tender.models.Typetender typetender) {
-        Typetender = typetender;
+    public void settypetender(com.keysight.tender.models.Typetender typetender) {
+        this.typetender = typetender;
     }
 
     public BigDecimal getPrice() {
@@ -179,19 +176,19 @@ public class Tender {
         this.sum = sum;
     }
 
-    public LocalDateTime getdateStart() {
+    public ZonedDateTime getdateStart() {
         return dateStart;
     }
 
-    public void setdateStart(LocalDateTime dateStart) {
+    public void setdateStart(ZonedDateTime dateStart) {
         this.dateStart = dateStart;
     }
 
-    public LocalDateTime getdateFinish() {
+    public ZonedDateTime getdateFinish() {
         return dateFinish;
     }
 
-    public void setdateFinish(LocalDateTime dateFinish) {
+    public void setdateFinish(ZonedDateTime dateFinish) {
         this.dateFinish = dateFinish;
     }
 
@@ -211,11 +208,11 @@ public class Tender {
         this.winSum = winSum;
     }
 
-    public String getWinner() {
-        return Winner.getName();
+    public String getwinner() {
+        return winner.getName();
     }
 
-    public void setWinner(com.keysight.tender.models.Winner winner) {
-        Winner = winner;
+    public void setwinner(com.keysight.tender.models.Winner winner) {
+        this.winner = winner;
     }
 }

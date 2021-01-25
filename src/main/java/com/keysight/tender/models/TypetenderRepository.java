@@ -9,5 +9,7 @@ import java.util.List;
 public interface TypetenderRepository extends CrudRepository<Typetender, Integer> {
     @Query
     List<Typetender> findByType(String type);
+    @Query
+    Typetender findById(Long id);
 
 }

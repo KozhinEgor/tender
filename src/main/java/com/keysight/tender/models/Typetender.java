@@ -24,7 +24,7 @@ public class Typetender {
 
     @JsonIgnore
     @XmlTransient
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "Typetender")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "typetender")
         private Set<Tender> Tender;
 
     public Typetender() {

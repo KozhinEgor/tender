@@ -24,7 +24,7 @@ public class Winner {
 
     @JsonIgnore
     @XmlTransient
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "Winner")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "winner")
         private Set<Tender> Tender;
 
     public Winner() {
