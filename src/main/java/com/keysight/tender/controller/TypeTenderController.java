@@ -2,11 +2,8 @@ package com.keysight.tender.controller;
 
 
 import com.keysight.tender.models.*;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DataFormatter;
-import org.apache.poi.xssf.usermodel.XSSFHyperlink;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -14,19 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
 
 
 @Controller
@@ -46,6 +35,8 @@ public class TypeTenderController {
     private CustomerRepository customerRepository;
     @Autowired
     private WinnerRepository winnerRepository;
+    @Autowired
+    private SpectrumAnalyserRepository spectrumAnalyserRepository;
     private DateTimeFormatter format_date= DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss z");
 
 
@@ -105,7 +96,28 @@ public class TypeTenderController {
     public @ResponseBody List<Typetender> FindByType(){
         return tenderRepository.findByType("Чет");
     }*/
-
+    @GetMapping(path = "/product")
+    public @ResponseBody String addNew() throws  Exception{
+        InputStream ExcelFileToRead = new FileInputStream("C:\\Users\\egkozhin\\Documents\\номенклатура1.xlsx");
+        XSSFWorkbook workbook = new XSSFWorkbook(ExcelFileToRead);
+        XSSFSheet sheet = workbook.getSheet("анализатор спектра");
+        int count = 1;
+        int maxrow = sheet.getLastRowNum();
+        while(sheet.getRow(count).getCell(0) != null && sheet.getRow(count).getCell(0).getCellType() != CellType.BLANK && count != maxrow) {
+            SpectrumAnalyser spectrumAnalyser = new SpectrumAnalyser();
+            spectrumAnalyser.setVendorCode(sheet.getRow(count).getCell(0).toString());
+            if(sheet.getRow(count).getCell(1) != null){
+                spectrumAnalyser.setVendor(sheet.getRow(count).getCell(1).getStringCellValue());
+            }
+            else {
+                spectrumAnalyser.setVendor("-");
+            }
+            spectrumAnalyserRepository.save(spectrumAnalyser);
+            count++;
+        }
+        ExcelFileToRead.close();
+        return "complete";
+    }
     @GetMapping(path = "/getAllTypes")
     public @ResponseBody Iterable<Typetender> getAllType(){
         return typetenderRepository.findAll();

@@ -1,6 +1,7 @@
 package com.keysight.tender.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 
@@ -8,15 +9,14 @@ import javax.persistence.*;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ProductCategory {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
         Long id;
-    @Column(unique=true)
+    @Column(nullable = false, unique=true)
         String category;
+    @Column(nullable = false)
+        String category_en;
 
     public ProductCategory() {
-    }
-    public ProductCategory(String category) {
-        this.category = category;
     }
 
     public Long getId() {
@@ -27,11 +27,19 @@ public class ProductCategory {
         this.id = id;
     }
 
-    public String getcategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setcategory(String category) {
+    public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getCategory_en() {
+        return category_en;
+    }
+
+    public void setCategory_en(String category_en) {
+        this.category_en = category_en;
     }
 }

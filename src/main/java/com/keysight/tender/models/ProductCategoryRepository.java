@@ -1,10 +1,11 @@
 package com.keysight.tender.models;
 
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface ProductCategoryRepository {
+public interface ProductCategoryRepository extends CrudRepository<ProductCategory, Integer> {
     @Query
-    List<Typetender> findTopByCategory(String Category);
+    List<ProductCategory> findTopByCategory(String Category);
 }
