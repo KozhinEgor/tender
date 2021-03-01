@@ -6,25 +6,20 @@ import javax.persistence.*;
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class SpectrumAnalyser {
+public class SignalGenerator {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-        private Long id;
-
+    Long id;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "vendorSpectrumAnalyser",nullable = false)
-        private Vendor vendorSpectrumAnalyser;
+    @JoinColumn(name = "vendorSignalGenerator",nullable = false)
+    private Vendor vendorSignalGenerator;
 
     @Column(nullable = false)
-       private String vendorCode;
+    String vendorCode;
     @Column(nullable = false)
-        private double frequency;
-    @Column(nullable = false)
-        private boolean portable = false;
-    @Column(nullable = false)
-       private boolean usb = false;
+    double frequency;
 
-    public SpectrumAnalyser() {
+    public SignalGenerator() {
     }
 
     public Long getId() {
@@ -36,11 +31,11 @@ public class SpectrumAnalyser {
     }
 
     public Vendor getVendor() {
-        return vendorSpectrumAnalyser;
+        return vendorSignalGenerator;
     }
 
     public void setVendor(Vendor vendor) {
-        this.vendorSpectrumAnalyser = vendor;
+        this.vendorSignalGenerator = vendor;
     }
 
     public String getVendorCode() {
@@ -59,29 +54,11 @@ public class SpectrumAnalyser {
         this.frequency = frequency;
     }
 
-    public boolean isPortable() {
-        return portable;
-    }
-
-    public void setPortable(boolean portable) {
-        this.portable = portable;
-    }
-
-    public boolean isUsb() {
-        return usb;
-    }
-
-    public void setUsb(boolean usb) {
-        this.usb = usb;
-    }
-
     public String getAnswear(){
-        String vendor = this.vendorSpectrumAnalyser.getName() != "-" ? this.vendorSpectrumAnalyser.getName() : "";
+        String vendor = this.vendorSignalGenerator.getName() != "-" ? this.vendorSignalGenerator.getName() : "";
         String vendorCode = this.vendorCode != "-" ? " "+this.vendorCode : "";
         String frequency = this.frequency != 0.0 ? " "+this.frequency : "";
-        String USB = this.usb ? " USB" : "";
-        String Portable = this.portable ? " Портативный" : "";
 
-        return vendor+vendorCode+frequency+USB+Portable;
+        return vendor+vendorCode+frequency;
     }
 }

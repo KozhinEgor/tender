@@ -2,7 +2,6 @@ package com.keysight.tender.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.mapping.Set;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
@@ -10,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -61,6 +61,11 @@ public class Tender {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "winner",nullable = false)
         private Winner winner;
+
+    @JsonIgnore
+    @XmlTransient
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tender")
+    private Set<Orders> Orders;
 
     public Tender() {
     }

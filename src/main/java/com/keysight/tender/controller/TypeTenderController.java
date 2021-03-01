@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.xmlbeans.impl.xb.xmlconfig.Extensionconfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 @Controller
@@ -29,6 +33,7 @@ public class TypeTenderController {
     private Typetender typetender;
     private Winner winner;
     private Tender Tender;
+    private Orders orders;
     @Autowired
     private TenderRepository tenderRepository;
     @Autowired
@@ -37,8 +42,24 @@ public class TypeTenderController {
     private WinnerRepository winnerRepository;
     @Autowired
     private SpectrumAnalyserRepository spectrumAnalyserRepository;
+    @Autowired
+    private VoltmeterRepository voltmeterRepository;
+    @Autowired
+    private PulseGeneratorRepository pulseGeneratorRepository;
+    @Autowired
+    private MultimeterRepository multimeterRepository;
+    @Autowired
+    private VendorRepository vendorRepository;
+    @Autowired
+    private SignalGeneratorRepository signalGeneratorRepository;
+    @Autowired
+    private SignalAnalyzerRepository signalAnalyzerRepository;
+    @Autowired
+    private OscilloscopeRepository oscilloscopeRepository;
+    @Autowired
+    private OrdersRepository ordersRepository;
     private DateTimeFormatter format_date= DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss z");
-
+    ArrayList<Extensionconfig.Interface> repository = new ArrayList<Extensionconfig.Interface>();
 
 
 
@@ -98,25 +119,14 @@ public class TypeTenderController {
     }*/
     @GetMapping(path = "/product")
     public @ResponseBody String addNew() throws  Exception{
-        InputStream ExcelFileToRead = new FileInputStream("C:\\Users\\egkozhin\\Documents\\номенклатура1.xlsx");
-        XSSFWorkbook workbook = new XSSFWorkbook(ExcelFileToRead);
-        XSSFSheet sheet = workbook.getSheet("анализатор спектра");
-        int count = 1;
-        int maxrow = sheet.getLastRowNum();
-        while(sheet.getRow(count).getCell(0) != null && sheet.getRow(count).getCell(0).getCellType() != CellType.BLANK && count != maxrow) {
-            SpectrumAnalyser spectrumAnalyser = new SpectrumAnalyser();
-            spectrumAnalyser.setVendorCode(sheet.getRow(count).getCell(0).toString());
-            if(sheet.getRow(count).getCell(1) != null){
-                spectrumAnalyser.setVendor(sheet.getRow(count).getCell(1).getStringCellValue());
-            }
-            else {
-                spectrumAnalyser.setVendor("-");
-            }
-            spectrumAnalyserRepository.save(spectrumAnalyser);
-            count++;
-        }
-        ExcelFileToRead.close();
-        return "complete";
+        searchAtribut.addProduct();
+        return "123";
+    }
+    @GetMapping(path = "/test")
+    public @ResponseBody OrdersModel getAlls(){
+        orders = ordersRepository.findTopById(Long.valueOf(1));
+        OrdersModel or = new OrdersModel(orders, searchAtribut.getProduct(orders.getProductCategory(),orders.getId_product()));
+        return or;
     }
     @GetMapping(path = "/getAllTypes")
     public @ResponseBody Iterable<Typetender> getAllType(){

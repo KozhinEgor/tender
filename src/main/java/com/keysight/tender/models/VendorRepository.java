@@ -5,8 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-
-public interface SpectrumAnalyserRepository extends CrudRepository<SpectrumAnalyser, Integer> {
+public interface VendorRepository extends CrudRepository<Vendor,Integer> {
     @Query
-        SpectrumAnalyser findTopById(Long id);
+    List<Vendor> findTopByName(String name);
+    @Query
+    Vendor findTopById(Long id);
 }

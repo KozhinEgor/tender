@@ -6,18 +6,16 @@ import javax.persistence.*;
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class Voltmeter {
+public class Multimeter {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-        Long id;
+    Long id;
     @Column(nullable = false)
-        String vendor;
+    String vendor;
     @Column(nullable = false)
-        String vendorCode;
-    @Column(nullable = false)
-        double frequency;
+    String vendorCode;
 
-    public Voltmeter() {
+    public Multimeter() {
     }
 
     public Long getId() {
@@ -42,13 +40,5 @@ public class Voltmeter {
 
     public void setVendorCode(String vendorCode) {
         this.vendorCode = vendorCode;
-    }
-
-    public double getFrequency() {
-        return frequency;
-    }
-
-    public void setFrequency(double frequency) {
-        this.frequency = frequency;
     }
 }
