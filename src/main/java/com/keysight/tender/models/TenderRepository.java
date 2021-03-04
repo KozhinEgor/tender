@@ -22,8 +22,12 @@ public interface TenderRepository extends CrudRepository<Tender, Integer> {
     @Query
         List<Tender> findByDateStartLessThanEqualAndDateFinishGreaterThanEqualAndCustomerId (ZonedDateTime dateFinish, ZonedDateTime dateStart, Customer Customer);
 */
-    @Query(value = "SELECT * FROM keysight.tender where typetender Like :t",nativeQuery = true)
-        List<Tender> findByTypetender_IdEndingWith(@Param("t") String t);
+    @Query
+        Tender findTopByNameTender(String name);
+    @Query
+        Tender findTopByBicoTender(String Bico);
+    @Query
+        Tender findTopByNumberTender(String number);
     @Query(value = "SELECT * FROM keysight.tender where date_start<=:dateFinish and date_finish>=:dateStart and typetender like :typetender "+
             " and customer like :customer and winner like :winner and sum >= :minSum and sum <= :maxSum",nativeQuery = true)
         List<Tender> SelectMyQuery(@Param("dateFinish") ZonedDateTime dateFinish,

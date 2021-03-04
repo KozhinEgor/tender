@@ -55,8 +55,8 @@ public class SignalAnalyzer {
     }
 
     public String getAnswear(){
-        String vendor = this.vendorSignalAnalyzer.getName() != "-" ? this.vendorSignalAnalyzer.getName() : "";
-        String vendorCode = this.vendorCode != "-" ? " "+this.vendorCode : "";
+        String vendor = !this.vendorSignalAnalyzer.getName().equals("No vendor") ? this.vendorSignalAnalyzer.getName() : "";
+        String vendorCode = !this.vendorCode.equals("no_vendor_code") ? " "+this.vendorCode : "";
         String frequency = this.frequency != 0.0 ? " "+this.frequency : "";
 
 

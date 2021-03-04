@@ -10,4 +10,8 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
     Customer findTopById(Long id);
     @Query
     List <Customer> findTopByInnAndName(String inn, String name);
+    @Query
+    List<Customer> findTopByInn(String inn);
+    @Query
+    List<Customer> findTopByName(String name);
 }

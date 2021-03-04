@@ -6,4 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface PulseGeneratorRepository extends CrudRepository<PulseGenerator,Integer> {
     @Query
     PulseGenerator findTopById(Long id);
+    @Query
+    PulseGenerator findTopByVendorCode(String vendoreCode);
 }

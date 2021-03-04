@@ -55,8 +55,8 @@ public class PulseGenerator {
     }
 
     public String getAnswear(){
-        String vendor = this.vendorPulseGenerator.getName() != "-" ? this.vendorPulseGenerator.getName() : "";
-        String vendorCode = this.vendorCode != "-" ? " "+this.vendorCode : "";
+        String vendor = !this.vendorPulseGenerator.getName().equals("No vendor") ? this.vendorPulseGenerator.getName() : "";
+        String vendorCode = !this.vendorCode.equals("no_vendor_code") ? " "+this.vendorCode : "";
         String frequency = this.frequency != 0.0 ? " "+this.frequency : "";
 
 

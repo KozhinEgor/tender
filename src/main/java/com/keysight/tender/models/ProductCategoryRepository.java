@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ProductCategoryRepository extends CrudRepository<ProductCategory, Integer> {
     @Query
-    List<ProductCategory> findTopByCategory(String Category);
+    ProductCategory findTopByCategory(String Category);
 }

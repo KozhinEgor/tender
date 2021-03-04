@@ -6,4 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface SignalGeneratorRepository extends CrudRepository<SignalGenerator,Integer> {
     @Query
     SignalGenerator findTopById(Long id);
+    @Query
+    SignalGenerator findTopByVendorCode(String vendoreCode);
 }

@@ -9,27 +9,21 @@ import javax.persistence.*;
 import java.util.List;
 
 public class OrdersModel {
-   // @Autowired
-    //private WinnerRepository winnerRepository;
-    @NotNull
+
     private Long id;
-    @NotNull
-    private String tender;
-
-    @NotNull
+    private Tender tender;
     private String productCategory;
-    @NotNull
     private String product;
-    @NotNull
     private String commet;
+    private int number;
 
-    public OrdersModel(Orders orders, String product) {
+    public OrdersModel(Orders orders,String product) {
         this.id = orders.getId();
-        this.tender = orders.getTender().getnameTender();
+        this.tender = orders.getTender();
         this.productCategory = orders.getProductCategory().getCategory();
         this.product = product;
         this.commet = orders.commet;
-
+        this.number = orders.getNumber();
     }
 
     public Long getId() {
@@ -40,12 +34,12 @@ public class OrdersModel {
         this.id = id;
     }
 
-    public String getTender() {
+    public Tender getTender() {
         return tender;
     }
 
     public void setTender(Tender tender) {
-        this.tender = tender.getnameTender();
+        this.tender = tender;
     }
 
     public String getProductCategory() {
@@ -70,5 +64,17 @@ public class OrdersModel {
 
     public void setCommet(String commet) {
         this.commet = commet;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String returnProduct(){
+        return this.productCategory + " " + this.product + " (" + this.commet + ") - " + this.number;
     }
 }

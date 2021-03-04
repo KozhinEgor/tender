@@ -16,6 +16,10 @@ public class AnotherProduct {
     public AnotherProduct() {
     }
 
+    public AnotherProduct(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

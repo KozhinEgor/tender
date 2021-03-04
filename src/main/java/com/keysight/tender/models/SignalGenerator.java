@@ -55,8 +55,8 @@ public class SignalGenerator {
     }
 
     public String getAnswear(){
-        String vendor = this.vendorSignalGenerator.getName() != "-" ? this.vendorSignalGenerator.getName() : "";
-        String vendorCode = this.vendorCode != "-" ? " "+this.vendorCode : "";
+        String vendor = !this.vendorSignalGenerator.getName().equals("No vendor") ? this.vendorSignalGenerator.getName() : "";
+        String vendorCode = !this.vendorCode.equals("no_vendor_code") ? " "+this.vendorCode : "";
         String frequency = this.frequency != 0.0 ? " "+this.frequency : "";
 
         return vendor+vendorCode+frequency;

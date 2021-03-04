@@ -76,12 +76,12 @@ public class Oscilloscope {
     }
 
     public String getAnswear(){
-        String vendor = this.vendorOscilloscope.getName() != "-" ? this.vendorOscilloscope.getName() : "";
-        String vendorCode = this.vendorCode != "-" ? " "+this.vendorCode : "";
+
+        String vendor = !this.vendorOscilloscope.getName().equals("No vendor")  ? this.vendorOscilloscope.getName() : "";
+        String vendorCode = !this.vendorCode.equals("no_vendor_code")   ? " "+this.vendorCode : "";
         String frequency = this.frequency != 0.0 ? " "+this.frequency : "";
         String USB = this.usb ? " USB" : "";
         String VXI = this.vxi ? " VXI" : "";
-
         return vendor+vendorCode+frequency+USB+VXI;
     }
 }

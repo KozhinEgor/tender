@@ -22,7 +22,7 @@ public class Tender {
     @JoinColumn(name = "customer",nullable = false)
         private  Customer customer;
     @Lob
-    @Column(nullable = false, length = 512)
+    @Column(nullable = false, length = 1024)
         private String nameTender;
     @Column(nullable = false)
         private String numberTender;

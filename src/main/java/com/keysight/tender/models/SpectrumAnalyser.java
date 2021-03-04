@@ -76,8 +76,8 @@ public class SpectrumAnalyser {
     }
 
     public String getAnswear(){
-        String vendor = this.vendorSpectrumAnalyser.getName() != "-" ? this.vendorSpectrumAnalyser.getName() : "";
-        String vendorCode = this.vendorCode != "-" ? " "+this.vendorCode : "";
+        String vendor = !this.vendorSpectrumAnalyser.getName().equals("No vendor") ? this.vendorSpectrumAnalyser.getName() : "";
+        String vendorCode = !this.vendorCode.equals("no_vendor_code") ? " "+this.vendorCode : "";
         String frequency = this.frequency != 0.0 ? " "+this.frequency : "";
         String USB = this.usb ? " USB" : "";
         String Portable = this.portable ? " Портативный" : "";

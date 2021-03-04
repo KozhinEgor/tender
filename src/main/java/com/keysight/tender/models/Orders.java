@@ -28,8 +28,18 @@ public class Orders {
     Long id_product;
     @Column(nullable = false)
     String commet ;
+    @Column(nullable = false)
+    int number;
 
     public Orders() {
+    }
+
+    public Orders(Tender tender, ProductCategory productCategory, Long id_product, String commet, int number) {
+        this.tender = tender;
+        this.productCategory = productCategory;
+        this.id_product = id_product;
+        this.commet = commet;
+        this.number = number;
     }
 
     public Long getId() {
@@ -71,5 +81,13 @@ public class Orders {
     public void setCommet(String commet) {
         this.commet = commet;
     }
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
 }
 
